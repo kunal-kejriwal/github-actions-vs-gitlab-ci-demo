@@ -115,11 +115,11 @@ GitLab CI is more script-driven. Stages run sequentially, jobs within a stage ru
 
 Here's what the same pipeline looks like rendered in each platform's UI. GitHub Actions shows it as a job summary with the three jobs as connected nodes:
 
-![GitHub Actions workflow summary showing test, build, and deploy jobs completing in 30 seconds on the master branch](repo/screenshots/github-actions-workflow-success.png)
+![GitHub Actions workflow summary showing test, build, and deploy jobs completing in 30 seconds on the master branch](screenshots/github-actions-workflow-success.png)
 
 GitLab CI renders the same pipeline as a stage-based DAG:
 
-![GitLab CI pipeline view showing the test, build, and deploy stages passing on master](repo/screenshots/gitlab-pipeline-build-success.png)
+![GitLab CI pipeline view showing the test, build, and deploy stages passing on master](screenshots/gitlab-pipeline-build-success.png)
 
 GitHub renders the workflow as a sequence of expandable step logs anchored to a summary; GitLab renders it as a directed graph of stages and jobs. Both work. They reward different mental models.
 
@@ -181,6 +181,6 @@ There isn't a winner here. There are three honest paths.
 
 The question worth asking isn't which CI/CD platform wins. It's which workload belongs where, and what infrastructure you need to keep both honest if the answer is "both."
 
-![Companion repo landing page at localhost:3000 showing the project tagline, side-by-side YAML snippets from .github/workflows/ci.yml and .gitlab-ci.yml, and the Try It commands](repo/screenshots/app-deployed.png)
+![Companion repo landing page at localhost:3000 showing the project tagline, side-by-side YAML snippets from .github/workflows/ci.yml and .gitlab-ci.yml, and the Try It commands](screenshots/app-deployed.png)
 
 The companion repo for this piece is at [github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo](https://github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo). It contains the Node.js application above, the GitHub Actions workflow, the GitLab CI configuration, and a README walking through how to fork to GitHub and mirror to GitLab so you can watch both pipelines run against the same code. Fork it, break it, send issues.
