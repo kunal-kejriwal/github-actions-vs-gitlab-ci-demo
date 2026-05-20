@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>github-actions-vs-gitlab-ci-demo</title>
+  <meta name="description" content="Companion repo for a side-by-side comparison of GitHub Actions and GitLab CI/CD.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-elev: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-dim: #8b949e;
+      --accent: #2dd4bf;
+      --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px 64px;
+    }
+
+    h1 {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    h1::before {
+      content: "$ ";
+      color: var(--accent);
+    }
+
+    .tagline {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin: 0 0 40px;
+    }
+
+    .lede {
+      color: var(--text);
+      margin: 0 0 48px;
+    }
+
+    .lede a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .lede a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    section {
+      margin: 48px 0;
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin: 0 0 16px;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .compare { grid-template-columns: 1fr; }
+      main { padding: 56px 20px 48px; }
+    }
+
+    .pane {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .pane-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .pane-label .file {
+      color: var(--accent);
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      font-family: var(--mono);
+      font-size: 0.78125rem;
+      line-height: 1.55;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .k { color: #ff7b72; }
+    .v { color: #a5d6ff; }
+    .c { color: var(--text-dim); }
+
+    .commands {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.9;
+    }
+
+    .commands .line { display: block; color: var(--text); }
+    .commands .line::before {
+      content: "$ ";
+      color: var(--accent);
+      user-select: none;
+    }
+
+    footer {
+      margin-top: 72px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    footer a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>github-actions-vs-gitlab-ci-demo</h1>
+    <p class="tagline">Same Node.js pipeline. Two CI platforms. Side by side.</p>
+
+    <p class="lede">
+      Companion repository for a blog post comparing <strong>GitHub Actions</strong> and <strong>GitLab CI/CD</strong>.
+      The same build-test-deploy pipeline for this small Express app is implemented twice &mdash;
+      once in <code>.github/workflows/ci.yml</code> and once in <code>.gitlab-ci.yml</code> &mdash;
+      so you can read them next to each other and see exactly where the two platforms diverge.
+    </p>
+
+    <section>
+      <h2>Pipeline, two ways</h2>
+      <div class="compare">
+        <div class="pane">
+          <div class="pane-label">GitHub Actions <span class="file">.github/workflows/ci.yml</span></div>
+<pre><span class="k">jobs:</span>
+  <span class="k">test:</span>
+    <span class="k">runs-on:</span> <span class="v">ubuntu-latest</span>
+    <span class="k">steps:</span>
+      - <span class="k">uses:</span> <span class="v">actions/checkout@v4</span>
+      - <span class="k">uses:</span> <span class="v">actions/setup-node@v4</span>
+        <span class="k">with:</span>
+          <span class="k">node-version:</span> <span class="v">'20'</span>
+          <span class="k">cache:</span> <span class="v">'npm'</span>
+      - <span class="k">run:</span> <span class="v">npm install</span>
+      - <span class="k">run:</span> <span class="v">npm test</span></pre>
+        </div>
+
+        <div class="pane">
+          <div class="pane-label">GitLab CI/CD <span class="file">.gitlab-ci.yml</span></div>
+<pre><span class="k">stages:</span>
+  - <span class="v">test</span>
+  - <span class="v">build</span>
+  - <span class="v">deploy</span>
+
+<span class="k">default:</span>
+  <span class="k">image:</span> <span class="v">node:20</span>
+  <span class="k">cache:</span>
+    <span class="k">paths:</span>
+      - <span class="v">node_modules/</span>
+
+<span class="k">test:</span>
+  <span class="k">stage:</span> <span class="v">test</span>
+  <span class="k">script:</span>
+    - <span class="v">npm install</span>
+    - <span class="v">npm test</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Try it</h2>
+      <div class="commands">
+        <span class="line">git clone https://github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo.git</span>
+        <span class="line">npm install</span>
+        <span class="line">npm start</span>
+      </div>
+    </section>
+
+    <footer>
+      <div class="links">
+        <a href="https://getint.io/blog/">Blog post</a>
+        <a href="https://github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo">GitHub repo</a>
+      </div>
+      <div>Built by Kunal Kejriwal</div>
+    </footer>
+  </main>
+</body>
+</html>

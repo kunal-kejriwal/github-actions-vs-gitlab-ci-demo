@@ -34,4 +34,4 @@ deploy:
     - chmod +x scripts/deploy.sh
     - ./scripts/deploy.sh
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "master"

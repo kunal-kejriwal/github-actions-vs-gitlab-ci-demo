@@ -1,8 +1,16 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 
 const app = express();
 
+const landingHtml = fs.readFileSync(path.join(__dirname, 'landing.html'), 'utf8');
+
 app.get('/', (req, res) => {
+  if (req.accepts(['json', 'html']) === 'html') {
+    res.type('html').send(landingHtml);
+    return;
+  }
   res.json({
     name: 'github-actions-vs-gitlab-ci-demo',
     message: 'Same pipeline, two platforms.',
