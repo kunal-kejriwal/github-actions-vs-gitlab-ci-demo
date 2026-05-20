@@ -1,0 +1,30 @@
+{
+  "name": "github-actions-vs-gitlab-ci-demo",
+  "version": "1.0.0",
+  "description": "Same Node.js pipeline implemented in both GitHub Actions and GitLab CI/CD",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest --coverage",
+    "build": "node scripts/build.js",
+    "lint": "echo 'Lint step placeholder — wire to eslint in real projects' && exit 0"
+  },
+  "keywords": [
+    "github-actions",
+    "gitlab-ci",
+    "cicd",
+    "demo"
+  ],
+  "author": "Kunal Kejriwal",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
