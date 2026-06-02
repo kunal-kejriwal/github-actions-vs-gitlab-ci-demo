@@ -184,3 +184,22 @@ The question worth asking isn't which CI/CD platform wins. It's which workload b
 ![Companion repo landing page at localhost:3000 showing the project tagline, side-by-side YAML snippets from .github/workflows/ci.yml and .gitlab-ci.yml, and the Try It commands](screenshots/app-deployed.png)
 
 The companion repo for this piece is at [github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo](https://github.com/kunal-kejriwal/github-actions-vs-gitlab-ci-demo). It contains the Node.js application above, the GitHub Actions workflow, the GitLab CI configuration, and a README walking through how to fork to GitHub and mirror to GitLab so you can watch both pipelines run against the same code. Fork it, break it, send issues.
+
+## At a glance: GitHub Actions vs. GitLab CI/CD
+
+| Dimension | GitHub Actions | GitLab CI/CD |
+|---|---|---|
+| **Core model** | Event-driven marketplace platform built around reusable actions | Integrated DevSecOps platform built around pipeline definitions inside the same product as repo, issues, and security |
+| **Configuration** | Multiple workflow files in `.github/workflows/`; composition of pre-built actions | Single `.gitlab-ci.yml` at repo root; stages, jobs, and dependencies are first-class YAML concepts |
+| **Pipeline shape** | Composes pre-built actions (`checkout`, `setup-node`, etc.); explicit `needs:` dependencies; jobs parallel by default | Script-driven; stages run sequentially, jobs within a stage run in parallel; artifacts pass between stages automatically |
+| **Runners & self-hosting** | Hosted runners on Linux, Windows, macOS, billed per minute; self-hosting supported | Shared runners with similar economics; self-hosted story more mature as the default, since GitLab itself is often self-hosted |
+| **Reusable logic** | Reusable workflows (`uses:`) and composite actions | `include:`, `extends:`, and the newer CI/CD Catalog |
+| **Secrets & identity** | Secrets at repo, org, and environment level; environment protection rules; OIDC to AWS/GCP/Azure | Project, group, and instance-level variables; protected and masked variables; JWT-based ID tokens for OIDC |
+| **Built-in security scanning** | GitHub Advanced Security (CodeQL, Dependabot, secret scanning) as a paid add-on | SAST, DAST, dependency, container, license, and secret scanning built in, surfaced inline on merge requests — strongest differentiator |
+| **Ecosystem** | Marketplace with tens of thousands of actions; compose rather than write, with a maintenance/supply-chain tax | CI/CD Catalog is newer and smaller; teams write more shell scripts |
+| **Monorepos & complex pipelines** | Elegant matrix builds; reusable workflow inputs for parameterized pipelines; more declarative | Dynamic child pipelines and path-based rules; more verbose |
+| **Caching** | Action-driven (`actions/cache`) | Built into the job schema |
+| **Log experience** | Collapsible step blocks with a strong job summary view | Continuous stream per job, with the pipeline DAG as the navigational surface |
+| **Free tier (verify before committing)** | 2,000 minutes/month for private repos; unlimited for public | Similar free tier with usage caps that have tightened over recent years |
+| **Developer experience** | Easier to start — zero to working pipeline in ~15 minutes via the marketplace | Steeper learning curve, but a higher ceiling for teams that invest in it |
+| **Best fit** | Deep GitHub ecosystem use, marketplace breadth, fastest time-to-first-pipeline, open-source/community projects | Built-in security without a separate product, one integrated platform, hard self-hosting requirement, unified compliance audit trails |
